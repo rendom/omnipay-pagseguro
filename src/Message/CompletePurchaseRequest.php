@@ -28,8 +28,8 @@ class CompletePurchaseRequest extends AbstractRequest
                                       $this->getNotificationCode(), 
                                       http_build_query($data, '', '&'));
                                    
-        $httpResponse = $this->httpClient->get($url)->send();
-        $xml = $httpResponse->xml();
+        $httpResponse = $this->httpClient->request('GET', $url);
+        $xml = simplexml_load_string($httpResponse->getBody()->getContents());
         
         return $this->createResponse($this->xml2array($xml));
     }

@@ -63,8 +63,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             'headers' => ['Content-Type' => 'x-www-form-urlencoded; charset=UTF-8']
         ];
 
-        $httpResponse = $this->httpClient->post($url, $headers, $data)->send();
-        $xml = $httpResponse->xml();
+        $httpResponse = $this->httpClient->request('POST', $url, $headers, http_build_query($data));
+        $xml = simplexml_load_string($httpResponse->getBody()->getContents());
 
         return $this->createResponse($this->xml2array($xml));
     }

@@ -44,8 +44,8 @@ class RefundRequest extends AbstractRequest
                                       $this->getResource(),
                                       http_build_query($data, '', '&'));
 
-        $httpResponse = $this->httpClient->post($url)->send();
-        $xml = $httpResponse->xml();
+        $httpResponse = $this->httpClient->request('POST', $url);
+        $xml = simplexml_load_string($httpResponse->getBody()->getContents());
 
         return $this->createResponse($this->xml2array($xml));
     }
